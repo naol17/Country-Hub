@@ -9,7 +9,7 @@ function FechCountry({ Country }) {
               key={Country.name.common}
               src={Country.flags.svg}
               alt=""
-              className="w-full"
+              className="w-full h-48"
             />
 
             <div className="align-middle justify-center pl-8 ">
