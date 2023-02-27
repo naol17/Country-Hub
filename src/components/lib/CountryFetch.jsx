@@ -1,5 +1,5 @@
 import React from "react";
-function FechCountry({ country }) {
+function Country({ country }) {
   return (
     <>
       {/* <div className=" bg-gray-50 dark:bg-slate-800  ">
@@ -54,7 +54,7 @@ function FechCountry({ country }) {
               key={country.name.common}
               src={country.flags.svg}
               alt=""
-              class="w-full aspect-auto"
+              class="w-full aspect-[5/3]"
             />
             <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
               <h3>
@@ -69,7 +69,7 @@ function FechCountry({ country }) {
                         2xl:text-[22px]
                         mb-4
                         block
-                        hover:text-primary
+                        hover:text-primary dark:text-white
                         "
                 >
                   {" "}
@@ -105,4 +105,4 @@ function FechCountry({ country }) {
     </>
   );
 }
-export default FechCountry;
+export default Country;

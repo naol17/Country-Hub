@@ -12,7 +12,6 @@ const Countries = () => {
 
   // Load more
   const loadmore = () => {
-    console.log("current index", itemsPerPage);
     setperpage(itemsPerPage + 8);
     if (itemsPerPage + 8 > currentCountries.length) {
       setcurrentCountries(currentCountries.slice(0, currentCountries.length));
@@ -48,9 +47,9 @@ const Countries = () => {
   };
 
   // Filter by region
-  const [RegionApidata, setRegionApidata] = useState([]);
-  const [RegionfilteredResult, setRegionFilteredresult] = useState([]);
-  const [RegionsearchInput, setRegionSearchinput] = useState("");
+  const [regionApiData, setRegionApidata] = useState([]);
+  const [regionFilteredResult, setRegionFilteredresult] = useState([]);
+  const [regionSearchInput, setRegionSearchinput] = useState("");
   useEffect(() => {
     axios.get(`https://restcountries.com/v3.1/all`).then((res) => {
       setRegionApidata(res.data);
@@ -63,14 +62,14 @@ const Countries = () => {
     console.log("value", value);
 
     if (value !== "All") {
-      const RfilteredCountry = RegionApidata.filter((country) => {
+      const RfilteredCountry = regionApiData.filter((country) => {
         return Object.values(country)
           .join("")
           .toLowerCase()
-          .includes(RegionsearchInput.toLowerCase());
+          .includes(regionSearchInput.toLowerCase());
       });
       setRegionFilteredresult(RfilteredCountry);
-      console.log("Rfiltered country", RegionfilteredResult);
+      console.log("Rfiltered country", regionFilteredResult);
     }
     setRegionSearchinput(value);
   };
@@ -126,7 +125,7 @@ const Countries = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9">
-        {RegionsearchInput.length !== RegionsearchInput.length
+        {regionSearchInput.length !== regionSearchInput.length
           ? currentCountries &&
             currentCountries.map((country) => {
               return (
@@ -135,7 +134,7 @@ const Countries = () => {
                 </Link>
               );
             })
-          : RegionfilteredResult.map((country) => {
+          : regionFilteredResult.map((country) => {
               return (
                 <Link to={`Countrydetails/${country.name.common}`}>
                   <FechCountry country={country} key={country.cca2} />
