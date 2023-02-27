@@ -9,7 +9,7 @@ export default function NavBar() {
     colorTheme === "light" ? true : false
   );
 
-  const togledak = (checked) => {
+  const toggleDark = (checked) => {
     setTheme(colorTheme);
     setDarkSide(checked);
   };
@@ -19,7 +19,7 @@ export default function NavBar() {
         Where in the world?
       </p>
       <button
-        onClick={togledak}
+        onClick={toggleDark}
         type="button"
         className="flex mr-8 p-1 rounded border shadow align-middle justify-center  dark:bg-slate-700 dark:text-white sm:w-20 sm:p-0 sm:text-xs "
       >
