@@ -4,7 +4,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function CountryDetailPage() {
+export default function Country() {
   const navigate = useNavigate();
   let { name } = useParams();
 

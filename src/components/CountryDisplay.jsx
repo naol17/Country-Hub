@@ -5,12 +5,10 @@ import { Link, useParams } from "react-router-dom";
 import FechCountry from "./lib/CountryFetch";
 const items = [...Array(250).keys()];
 
-const CountryDisplay = () => {
+const Countries = () => {
   const [itemsPerPage, setperpage] = useState(8);
   const [currentCountries, setcurrentCountries] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [paginatedCars, setPaginatedCars] = useState(undefined);
 
   // Load more
   const loadmore = () => {
@@ -25,7 +23,7 @@ const CountryDisplay = () => {
 
   // for search Countries
 
-  const [Apidata, setApidata] = useState([]);
+  const [apiData, setApidata] = useState([]);
   const [filteredResult, setFilteredresult] = useState([]);
   const [searchInput, setSearchinput] = useState("");
 
@@ -39,7 +37,7 @@ const CountryDisplay = () => {
   const searchCountry = (searchValue) => {
     setSearchinput(searchValue);
     if (searchInput !== "") {
-      const filteredCountry = Apidata.filter((country) => {
+      const filteredCountry = apiData.filter((country) => {
         return Object.values(country)
           .join("")
           .toLowerCase()
@@ -85,7 +83,7 @@ const CountryDisplay = () => {
     axios.get("https://restcountries.com/v3.1/all").then(({ data }) => {
       setcurrentCountries(data.slice(itemOffset, endOffset));
     });
-    setPageCount(Math.ceil(items.length / itemsPerPage));
+    // setPageCount(Math.ceil(items.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = (event) => {
@@ -133,14 +131,14 @@ const CountryDisplay = () => {
             currentCountries.map((country) => {
               return (
                 <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry Country={country} key={country.cca2} />
+                  <FechCountry country={country} key={country.cca2} />
                 </Link>
               );
             })
           : RegionfilteredResult.map((country) => {
               return (
                 <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry Country={country} key={country.cca2} />
+                  <FechCountry country={country} key={country.cca2} />
                 </Link>
               );
             })}
@@ -150,20 +148,21 @@ const CountryDisplay = () => {
             currentCountries.map((country, index) => {
               return (
                 <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry Country={country} key={country.cca2} />;
+                  <FechCountry country={country} key={country.cca2} />;
                 </Link>
               );
             })
           : filteredResult.map((country, index) => {
               return (
                 <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry Country={country} key={country.cca2} />
+                  <FechCountry country={country} key={country.cca2} />
                 </Link>
               );
             })}
-
+      </div>
+      <div className="dark:bg-slate-800 pl-96 sm:pl-20 md:pl-60 pr-60 ">
         <button
-          className="border hover:bg-green-500 rounded dark:text-white p-2 m-7"
+          className="border border-black bg-slate-700 text-white hover:bg-green-500 rounded dark:bg-lime-400 dark:hover:bg-lime-500   dark:text-black p-2 mb-12  w-32 h-16"
           onClick={loadmore}
         >
           load more
@@ -173,4 +172,4 @@ const CountryDisplay = () => {
   );
 };
 
-export default CountryDisplay;
+export default Countries;
