@@ -36,11 +36,6 @@ const Countries = () => {
       setIsloading(false);
     });
   };
-
-  useEffect(() => {
-    getCountries();
-  }, []);
-
   // for search Countries
 
   const searchCountry = (countryName) => {
@@ -50,12 +45,30 @@ const Countries = () => {
     return axios.get(`https://restcountries.com/v3.1/name/${countryName}`).then(
       (res) => {
         setcurrentCountries(res.data.slice(itemOffset, endOffset));
+        setIsloading(false);
       },
       (error) => {
         return <h1>{error.message}</h1>;
       }
     );
   };
+
+  const filterByRegion = (region) => {
+    const endOffset = itemOffset + itemsPerPage;
+
+    setIsloading(true);
+
+    return axios
+      .get(`https://restcountries.com/v3.1/region/${region}`)
+      .then((res) => {
+        setcurrentCountries(res.data.slice(itemOffset, endOffset));
+        setIsloading(false);
+      });
+  };
+
+  useEffect(() => {
+    getCountries();
+  }, []);
 
   useEffect(() => {
     if (!searchInput) {
@@ -64,14 +77,26 @@ const Countries = () => {
       searchCountry(searchInput);
     }
   }, [searchInput]);
+
+  useEffect(() => {
+    if (!regionSearchInput) {
+      getCountries();
+    } else {
+      filterByRegion(regionSearchInput);
+    }
+  }, [regionSearchInput]);
+
   const searchForCountry = (e) => {
     const value = e.target.value;
     setSearchinput(value);
+    setRegionSearchinput(null);
   };
 
-  // //////////////////////
-  //  search by reagion
-
+  const regionSearchCountry = (e) => {
+    const value = e.target.value;
+    setRegionSearchinput(value);
+    setSearchinput(null);
+  };
   // //////////////////////
 
   return (
@@ -95,12 +120,13 @@ const Countries = () => {
             className="border p-3 mt-4 bg-white rounded dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:shadow-slate-900 "
             name="continent"
             id=""
-            // onChange={RegionsearchCountry}
+            value={regionSearchInput}
+            onChange={regionSearchCountry}
           >
-            <option value="All">Filter By Region</option>
+            <option value="null">Filter By Region</option>
             <option value="Africa">Africa</option>
             <option value="Asia">Asia</option>
-            <option value="America">America</option>
+            <option value="Americas">Americas</option>
             <option value="Europe">Europe</option>
             <option value="Oceania">Oceania</option>
           </select>
