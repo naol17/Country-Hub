@@ -14,7 +14,7 @@ const Countries = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [searchInput, setSearchinput] = useState(null);
   const [regionSearchInput, setRegionSearchinput] = useState(null);
-  const [Loading, setIsloading] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   // Load more
   const loadmore = () => {
@@ -25,6 +25,21 @@ const Countries = () => {
     }
     setcurrentCountries(currentCountries.slice(0, itemsPerPage + 8));
   };
+
+  //  all countries
+  const getCountries = () => {
+    setIsloading(true);
+    const endOffset = itemOffset + itemsPerPage;
+
+    return axios.get("https://restcountries.com/v3.1/all").then((res) => {
+      setcurrentCountries(res.data.slice(itemOffset, endOffset));
+      setIsloading(false);
+    });
+  };
+
+  useEffect(() => {
+    getCountries();
+  }, []);
 
   // for search Countries
 
@@ -44,58 +59,20 @@ const Countries = () => {
 
   useEffect(() => {
     if (!searchInput) {
-      searchCountry();
+      getCountries();
     } else {
       searchCountry(searchInput);
     }
   }, [searchInput]);
-
-  /////////////////////////
   const searchForCountry = (e) => {
     const value = e.target.value;
     setSearchinput(value);
   };
+
   // //////////////////////
   //  search by reagion
 
   // //////////////////////
-
-  const getCountries = () => {
-    return axios.get("https://restcountries.com/v3.1/all");
-  };
-
-  const onSuccess = (data) => {
-    const endOffset = itemOffset + itemsPerPage;
-    setcurrentCountries(data.data.slice(itemOffset, endOffset));
-  };
-
-  const { isLoading, error, data } = useQuery("country", getCountries, {
-    refetchOnMount: true,
-    onSuccess,
-  });
-  if (isLoading) {
-    return (
-      <>
-        <div className="flex m-96 md:m-72 sm:m-60 ">
-          <AiOutlineLoading3Quarters size="2.5rem" />
-          <p className="pl-4 font-bold text-xl pt-2">Loading Data...</p>;
-        </div>
-      </>
-    );
-  }
-
-  if (error) {
-    return (
-      <>
-        <div className="flex m-96 md:m-68 sm:m-60 w-full md:w-72 md:m-72">
-          <TbFaceIdError size="2.5rem" />
-          <p className="pl-4 font-bold text-xl pt-3 ">
-            Oops! something went wrong {error.message}
-          </p>
-        </div>
-      </>
-    );
-  }
 
   return (
     <>
@@ -130,7 +107,8 @@ const Countries = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9">
-        {currentCountries && currentCountries.length > 0 ? (
+        {isLoading && <h1>Loading ...</h1>}
+        {!isLoading && currentCountries && currentCountries.length > 0 ? (
           currentCountries.map((country) => {
             return (
               <Link to={`Countrydetails/${country.name.common}`}>
@@ -139,25 +117,8 @@ const Countries = () => {
             );
           })
         ) : (
-          <h1>No country</h1>
+          <h1>No country found</h1>
         )}
-
-        {/* {searchInput.length < 1
-          ? currentCountries &&
-            currentCountries.map((country, index) => {
-              return (
-                <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry country={country} key={country.cca2} />;
-                </Link>
-              );
-            })
-          : filteredResult.map((country, index) => {
-              return (
-                <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry country={country} key={country.cca2} />
-                </Link>
-              );
-            })} */}
       </div>
       <div className="dark:bg-slate-800 pl-96 sm:pl-20 md:pl-60 pr-60 ">
         <button
