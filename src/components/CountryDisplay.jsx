@@ -79,18 +79,25 @@ const Countries = () => {
   // //////////////////////
 
   const getCountries = () => {
-    const endOffset = itemOffset + itemsPerPage;
-
     return axios.get("https://restcountries.com/v3.1/all");
   };
 
+  const onSuccess = (data) => {
+    console.log(data);
+    const endOffset = itemOffset + itemsPerPage;
+    setcurrentCountries(data.data.slice(itemOffset, endOffset));
+  };
 
-  const onSuccess
-   const {isLoading, error, onSuccess,data} = useQuery("country",getCountries,{
+  const { isLoading, error, data } = useQuery("country", getCountries, {
     onSuccess,
-    error,
-    isLoading
-   })
+  });
+  if (isLoading) {
+    return <h1>Loading uchii hadhashe</h1>;
+  }
+
+  if (error) {
+    return <h1>Oops! smtng went wrong {error.message}</h1>;
+  }
 
   // useEffect(() => {
   //   const endOffset = itemOffset + itemsPerPage;
