@@ -135,7 +135,7 @@ const Countries = () => {
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9">
         {isLoading && (
-          <h1 className="flex m-24 dark:m-24 dark:text-white dark:text-md text-6xl">
+          <h1 className="flex m-24 md:m-16 sm:m-10 sm:text-sm md:text-md dark:m-24 dark:text-white dark:text-md text-6xl">
             {" "}
             <span className="m-3">
               <AiOutlineLoading3Quarters />
@@ -152,7 +152,7 @@ const Countries = () => {
             );
           })
         ) : (
-          <h1 className="m-24 dark:m-24 dark:text-white dark:text-md text-6xl">
+          <h1 className="m-24 dark:m-24 dark:text-white dark:text-md text-6xl  md:m-16 sm:m-10 sm:text-sm md:text-md">
             No country found
           </h1>
         )}
