@@ -19,6 +19,7 @@ const Countries = () => {
   // Load more
   const loadmore = () => {
     setperpage(itemsPerPage + 8);
+    setIsloading(true);
     if (itemsPerPage + 8 > currentCountries.length) {
       setcurrentCountries(currentCountries.slice(0, currentCountries.length));
       return;
@@ -94,8 +95,9 @@ const Countries = () => {
 
   const regionSearchCountry = (e) => {
     const value = e.target.value;
-    setRegionSearchinput(value);
     setSearchinput(null);
+
+    setRegionSearchinput(value);
   };
   // //////////////////////
 
@@ -148,10 +150,11 @@ const Countries = () => {
       </div>
       <div className="dark:bg-slate-800 pl-96 sm:pl-20 md:pl-60 pr-60 ">
         <button
-          className="border border-black bg-slate-700 text-white hover:bg-green-500 rounded dark:bg-lime-400 dark:hover:bg-lime-500   dark:text-black p-2 mb-12  w-32 h-16"
+          className="border border-black mt-4 dark:mt-4 bg-slate-700 text-white hover:bg-green-500 rounded dark:bg-lime-400 dark:hover:bg-lime-500   dark:text-black p-2 mb-12  w-32 h-16"
           onClick={loadmore}
         >
-          load more
+          {isLoading && <p>Loading...</p>}
+          {!isLoading && <p>Load More</p>}
         </button>
       </div>
     </>
