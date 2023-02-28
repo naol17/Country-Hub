@@ -3,7 +3,6 @@ import axios from "axios";
 import { BsSearch } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import FechCountry from "./lib/CountryFetch";
-import { data } from "autoprefixer";
 import { useQuery } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { TbFaceIdError } from "react-icons/tb";
@@ -30,14 +29,13 @@ const Countries = () => {
   const [filteredResult, setFilteredresult] = useState([]);
   const [searchInput, setSearchinput] = useState("");
 
-  useEffect(() => {
-    axios.get(`https://restcountries.com/v3.1/all`).then((res) => {
-      setApidata(res.data);
-    });
-    setApidata;
-  }, []);
+  const searchCountry1 = () => {
+    return axios.get(`https://restcountries.com/v3.1/all`);
+  };
 
-  const searchCountry = (searchValue) => {
+  const onSuccessSearch = (searchValue) => {
+    setApidata(data.data);
+    console.log("onsearch data", data.data);
     setSearchinput(searchValue);
     if (searchInput !== "") {
       const filteredCountry = apiData.filter((country) => {
@@ -46,9 +44,40 @@ const Countries = () => {
           .toLowerCase()
           .includes(searchInput.toLowerCase());
       });
+
       setFilteredresult(filteredCountry);
     }
   };
+  const onerror = () => {
+    console.log("hfhfh");
+  };
+  const { Error } = useQuery("countrySearch", searchCountry1, {
+    onSuccessSearch,
+  });
+  if (Error) {
+    return <h1>uchii hadhaishee diddem</h1>;
+  }
+
+  /////////////////////////
+  // useEffect(() => {
+  //   axios.get(`https://restcountries.com/v3.1/all`).then((res) => {
+  //     setApidata(res.data);
+  //   });
+  //   setApidata;
+  // }, []);
+
+  // const searchCountry = (searchValue) => {
+  //   setSearchinput(searchValue);
+  //   if (searchInput !== "") {
+  //     const filteredCountry = apiData.filter((country) => {
+  //       return Object.values(country)
+  //         .join("")
+  //         .toLowerCase()
+  //         .includes(searchInput.toLowerCase());
+  //     });
+  //     setFilteredresult(filteredCountry);
+  //   }
+  // };
 
   // Filter by region
   const [regionApiData, setRegionApidata] = useState([]);
@@ -81,11 +110,10 @@ const Countries = () => {
   // //////////////////////
 
   const getCountries = () => {
-    return axios.get("https://restcountries.com/v3.1/al");
+    return axios.get("https://restcountries.com/v3.1/all");
   };
 
   const onSuccess = (data) => {
-    console.log(data);
     const endOffset = itemOffset + itemsPerPage;
     setcurrentCountries(data.data.slice(itemOffset, endOffset));
   };
@@ -98,7 +126,7 @@ const Countries = () => {
       <>
         <div className="flex m-96 md:m-72 sm:m-60 ">
           <AiOutlineLoading3Quarters size="2.5rem" />
-          <h1 className="pl-4 font-bold text-xl pt-2">Loading Data...</h1>;
+          <p className="pl-4 font-bold text-xl pt-2">Loading Data...</p>;
         </div>
       </>
     );
@@ -109,9 +137,9 @@ const Countries = () => {
       <>
         <div className="flex m-96 md:m-68 sm:m-60 w-full md:w-72 md:m-72">
           <TbFaceIdError size="2.5rem" />
-          <h1 className="pl-4 font-bold text-xl pt-3 ">
+          <p className="pl-4 font-bold text-xl pt-3 ">
             Oops! something went wrong {error.message}
-          </h1>
+          </p>
         </div>
       </>
     );
@@ -129,7 +157,7 @@ const Countries = () => {
             name=""
             id=""
             placeholder="Search"
-            onChange={(e) => searchCountry(e.target.value)}
+            onChange={(e) => onSuccessSearch(e.target.value)}
           />
         </div>
         <div className="mr-8 p-2">
