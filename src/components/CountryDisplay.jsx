@@ -3,6 +3,8 @@ import axios from "axios";
 import { BsSearch } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import FechCountry from "./lib/CountryFetch";
+import { data } from "autoprefixer";
+import { useQuery } from "react-query";
 const items = [...Array(250).keys()];
 
 const Countries = () => {
@@ -75,15 +77,30 @@ const Countries = () => {
   };
 
   // //////////////////////
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
 
-    axios.get("https://restcountries.com/v3.1/all").then(({ data }) => {
-      setcurrentCountries(data.slice(itemOffset, endOffset));
-    });
-    // setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+  const getCountries = () => {
+    const endOffset = itemOffset + itemsPerPage;
+
+    return axios.get("https://restcountries.com/v3.1/all");
+  };
+
+
+  const onSuccess
+   const {isLoading, error, onSuccess,data} = useQuery("country",getCountries,{
+    onSuccess,
+    error,
+    isLoading
+   })
+
+  // useEffect(() => {
+  //   const endOffset = itemOffset + itemsPerPage;
+  //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+
+  //   axios.get("https://restcountries.com/v3.1/all").then(({ data }) => {
+  //     setcurrentCountries(data.slice(itemOffset, endOffset));
+  //   });
+  //   // setPageCount(Math.ceil(items.length / itemsPerPage));
+  // }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
