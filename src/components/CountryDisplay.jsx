@@ -117,24 +117,6 @@ const Countries = () => {
     );
   }
 
-  // useEffect(() => {
-  //   const endOffset = itemOffset + itemsPerPage;
-  //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-
-  //   axios.get("https://restcountries.com/v3.1/all").then(({ data }) => {
-  //     setcurrentCountries(data.slice(itemOffset, endOffset));
-  //   });
-  //   // setPageCount(Math.ceil(items.length / itemsPerPage));
-  // }, [itemOffset, itemsPerPage]);
-
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
-  };
-
   return (
     <>
       {/* search bar area */}
