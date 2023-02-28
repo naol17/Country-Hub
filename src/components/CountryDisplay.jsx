@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import FechCountry from "./lib/CountryFetch";
 import { data } from "autoprefixer";
 import { useQuery } from "react-query";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { TbFaceIdError } from "react-icons/tb";
 const items = [...Array(250).keys()];
 
 const Countries = () => {
@@ -79,7 +81,7 @@ const Countries = () => {
   // //////////////////////
 
   const getCountries = () => {
-    return axios.get("https://restcountries.com/v3.1/all");
+    return axios.get("https://restcountries.com/v3.1/al");
   };
 
   const onSuccess = (data) => {
@@ -92,11 +94,27 @@ const Countries = () => {
     onSuccess,
   });
   if (isLoading) {
-    return <h1>Loading uchii hadhashe</h1>;
+    return (
+      <>
+        <div className="flex m-96 md:m-72 sm:m-60 ">
+          <AiOutlineLoading3Quarters size="2.5rem" />
+          <h1 className="pl-4 font-bold text-xl pt-2">Loading Data...</h1>;
+        </div>
+      </>
+    );
   }
 
   if (error) {
-    return <h1>Oops! smtng went wrong {error.message}</h1>;
+    return (
+      <>
+        <div className="flex m-96 md:m-68 sm:m-60 w-full md:w-72 md:m-72">
+          <TbFaceIdError size="2.5rem" />
+          <h1 className="pl-4 font-bold text-xl pt-3 ">
+            Oops! something went wrong {error.message}
+          </h1>
+        </div>
+      </>
+    );
   }
 
   // useEffect(() => {
