@@ -35,7 +35,7 @@ const Countries = () => {
 
   const onSuccessSearch = (searchValue) => {
     setApidata(data.data);
-    console.log("onsearch data", data.data);
+    // console.log("onsearch data", data.data);
     setSearchinput(searchValue);
     if (searchInput !== "") {
       const filteredCountry = apiData.filter((country) => {
@@ -48,14 +48,12 @@ const Countries = () => {
       setFilteredresult(filteredCountry);
     }
   };
-  const onerror = () => {
-    console.log("hfhfh");
-  };
+
   const { Error } = useQuery("countrySearch", searchCountry1, {
     onSuccessSearch,
   });
   if (Error) {
-    return <h1>uchii hadhaishee diddem</h1>;
+    return <p className="m-96 text-6xl">error {Error.message}</p>;
   }
 
   /////////////////////////
