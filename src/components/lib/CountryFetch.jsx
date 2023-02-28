@@ -47,7 +47,7 @@ function Country({ country }) {
         </div>
       </div> */}
 
-      <section class=" ml-5 bg-[#F3F4F6] border shadow dark:border-slate-700 dark:bg-slate-700 mt-10">
+      <section class=" ml-12 mr-4 bg-[#F3F4F6] border shadow dark:border-slate-700 dark:bg-slate-700 mt-10">
         <div class="flex flex-wrap ">
           <div class=" rounded-lg overflow-hidden mb-10">
             <img

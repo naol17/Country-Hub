@@ -104,7 +104,7 @@ const Countries = () => {
     <>
       {/* search bar area */}
       <div className="flex align-center bg-gray-50 justify-between dark:bg-slate-800 ">
-        <div className="flex m-4 border  w-2/5 dark:bg-slate-800 dark:text-white dark:rounded dark:border-slate-500">
+        <div className="flex m-4 border ml-12  w-2/5 dark:bg-slate-800 dark:text-white dark:rounded dark:border-slate-500">
           <input
             icon="search"
             className="border-none w-full p-3 focus:border-none dark:bg-slate-800 dark:text-white dark:border-slate-500 dark:rounded"
@@ -116,7 +116,7 @@ const Countries = () => {
             onChange={searchForCountry}
           />
         </div>
-        <div className="mr-8 p-2">
+        <div className="mr-11 p-2">
           <select
             className="border p-3 mt-4 bg-white rounded dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:shadow-slate-900 "
             name="continent"
