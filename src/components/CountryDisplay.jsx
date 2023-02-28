@@ -6,7 +6,6 @@ import FechCountry from "./lib/CountryFetch";
 import { useQuery } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { TbFaceIdError } from "react-icons/tb";
-const items = [...Array(250).keys()];
 
 const Countries = () => {
   const [itemsPerPage, setperpage] = useState(8);
@@ -135,7 +134,15 @@ const Countries = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9">
-        {isLoading && <h1>Loading ...</h1>}
+        {isLoading && (
+          <h1 className="flex m-24 dark:m-24 dark:text-white dark:text-md text-6xl">
+            {" "}
+            <span className="m-3">
+              <AiOutlineLoading3Quarters />
+            </span>{" "}
+            Loading ...
+          </h1>
+        )}
         {!isLoading && currentCountries && currentCountries.length > 0 ? (
           currentCountries.map((country) => {
             return (
@@ -145,7 +152,9 @@ const Countries = () => {
             );
           })
         ) : (
-          <h1>No country found</h1>
+          <h1 className="m-24 dark:m-24 dark:text-white dark:text-md text-6xl">
+            No country found
+          </h1>
         )}
       </div>
       <div className="dark:bg-slate-800 pl-96 sm:pl-20 md:pl-60 pr-60 ">
