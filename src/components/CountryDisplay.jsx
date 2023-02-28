@@ -12,6 +12,9 @@ const Countries = () => {
   const [itemsPerPage, setperpage] = useState(8);
   const [currentCountries, setcurrentCountries] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
+  const [searchInput, setSearchinput] = useState(null);
+  const [regionSearchInput, setRegionSearchinput] = useState(null);
+  const [Loading, setIsloading] = useState(false);
 
   // Load more
   const loadmore = () => {
@@ -25,85 +28,35 @@ const Countries = () => {
 
   // for search Countries
 
-  const [apiData, setApidata] = useState([]);
-  const [filteredResult, setFilteredresult] = useState([]);
-  const [searchInput, setSearchinput] = useState("");
+  const searchCountry = (countryName) => {
+    const endOffset = itemOffset + itemsPerPage;
 
-  const searchCountry1 = () => {
-    return axios.get(`https://restcountries.com/v3.1/all`);
+    setIsloading(true);
+    return axios.get(`https://restcountries.com/v3.1/name/${countryName}`).then(
+      (res) => {
+        setcurrentCountries(res.data.slice(itemOffset, endOffset));
+      },
+      (error) => {
+        return <h1>{error.message}</h1>;
+      }
+    );
   };
 
-  const onSuccessSearch = (searchValue) => {
-    setApidata(data.data);
-    // console.log("onsearch data", data.data);
-    setSearchinput(searchValue);
-    if (searchInput !== "") {
-      const filteredCountry = apiData.filter((country) => {
-        return Object.values(country)
-          .join("")
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
-      });
-
-      setFilteredresult(filteredCountry);
+  useEffect(() => {
+    if (!searchInput) {
+      searchCountry();
+    } else {
+      searchCountry(searchInput);
     }
-  };
-
-  const { Error } = useQuery("countrySearch", searchCountry1, {
-    onSuccessSearch,
-  });
-  if (Error) {
-    return <p className="m-96 text-6xl">error {Error.message}</p>;
-  }
+  }, [searchInput]);
 
   /////////////////////////
-  // useEffect(() => {
-  //   axios.get(`https://restcountries.com/v3.1/all`).then((res) => {
-  //     setApidata(res.data);
-  //   });
-  //   setApidata;
-  // }, []);
-
-  // const searchCountry = (searchValue) => {
-  //   setSearchinput(searchValue);
-  //   if (searchInput !== "") {
-  //     const filteredCountry = apiData.filter((country) => {
-  //       return Object.values(country)
-  //         .join("")
-  //         .toLowerCase()
-  //         .includes(searchInput.toLowerCase());
-  //     });
-  //     setFilteredresult(filteredCountry);
-  //   }
-  // };
-
-  // Filter by region
-  const [regionApiData, setRegionApidata] = useState([]);
-  const [regionFilteredResult, setRegionFilteredresult] = useState([]);
-  const [regionSearchInput, setRegionSearchinput] = useState("");
-  useEffect(() => {
-    axios.get(`https://restcountries.com/v3.1/all`).then((res) => {
-      setRegionApidata(res.data);
-    });
-    setRegionApidata;
-  }, []);
-
-  const RegionsearchCountry = (e) => {
+  const searchForCountry = (e) => {
     const value = e.target.value;
-    console.log("value", value);
-
-    if (value !== "All") {
-      const RfilteredCountry = regionApiData.filter((country) => {
-        return Object.values(country)
-          .join("")
-          .toLowerCase()
-          .includes(regionSearchInput.toLowerCase());
-      });
-      setRegionFilteredresult(RfilteredCountry);
-      console.log("Rfiltered country", regionFilteredResult);
-    }
-    setRegionSearchinput(value);
+    setSearchinput(value);
   };
+  // //////////////////////
+  //  search by reagion
 
   // //////////////////////
 
@@ -117,6 +70,7 @@ const Countries = () => {
   };
 
   const { isLoading, error, data } = useQuery("country", getCountries, {
+    refetchOnMount: true,
     onSuccess,
   });
   if (isLoading) {
@@ -155,7 +109,8 @@ const Countries = () => {
             name=""
             id=""
             placeholder="Search"
-            onChange={(e) => onSuccessSearch(e.target.value)}
+            value={searchInput}
+            onChange={searchForCountry}
           />
         </div>
         <div className="mr-8 p-2">
@@ -163,7 +118,7 @@ const Countries = () => {
             className="border p-3 mt-4 bg-white rounded dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:shadow-slate-900 "
             name="continent"
             id=""
-            onChange={RegionsearchCountry}
+            // onChange={RegionsearchCountry}
           >
             <option value="All">Filter By Region</option>
             <option value="Africa">Africa</option>
@@ -175,24 +130,19 @@ const Countries = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9">
-        {regionSearchInput.length !== regionSearchInput.length
-          ? currentCountries &&
-            currentCountries.map((country) => {
-              return (
-                <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry country={country} key={country.cca2} />
-                </Link>
-              );
-            })
-          : regionFilteredResult.map((country) => {
-              return (
-                <Link to={`Countrydetails/${country.name.common}`}>
-                  <FechCountry country={country} key={country.cca2} />
-                </Link>
-              );
-            })}
+        {currentCountries && currentCountries.length > 0 ? (
+          currentCountries.map((country) => {
+            return (
+              <Link to={`Countrydetails/${country.name.common}`}>
+                <FechCountry country={country} key={country.cca2} />
+              </Link>
+            );
+          })
+        ) : (
+          <h1>No country</h1>
+        )}
 
-        {searchInput.length < 1
+        {/* {searchInput.length < 1
           ? currentCountries &&
             currentCountries.map((country, index) => {
               return (
@@ -207,7 +157,7 @@ const Countries = () => {
                   <FechCountry country={country} key={country.cca2} />
                 </Link>
               );
-            })}
+            })} */}
       </div>
       <div className="dark:bg-slate-800 pl-96 sm:pl-20 md:pl-60 pr-60 ">
         <button
