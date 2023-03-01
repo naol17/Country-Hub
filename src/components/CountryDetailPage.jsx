@@ -42,12 +42,8 @@ export default function Country() {
         return (
           <>
             <div className="flex align-midle justify-between mr-20 ml-16 mt-12 md:h-1/2 sm:flex-col sm:-mt-12">
-              <div className=" mr-2 h-full md:w-96 pr-20 md:m-12 md:h-60  ">
-                <img
-                  className="h-full w-full  md:w-96 md:mt-12 mt-24"
-                  src={country.flags.svg}
-                  alt=""
-                />
+              <div className=" mt-12  lg:pb-32 lg:pr-32 lg:pl-32 md:-mt-50 sm:mt-24 h-24">
+                <img className="h-80" src={country.flags.svg} alt="" />
               </div>
               <div className="  w-2/3 p-8 md:w-1/2 md:mr-7 sm:mt-6 sm:p-0 sm:-ml-3">
                 {/* Countrie Name */}
@@ -56,8 +52,8 @@ export default function Country() {
                 </h2>
 
                 {/* Detail abiut the country */}
-                <div className="flex mt-6 md:pr-12 sm:flex-col  md:w-96  ">
-                  <div className=" w-1/2 ml-4 sm:w-full">
+                <div className="flex mt-6 md:pr-12 sm:flex-col  md:w-96 sm:w-1/2  ">
+                  <div className=" w-1/2 ml-4 sm:w-1/2">
                     <h2 className="mb-2 dark:text- font-semibold dark:text-white flex ">
                       Native Name:
                       {Object.keys(country.name.nativeName).map(

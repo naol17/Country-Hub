@@ -17,12 +17,9 @@ const Countries = () => {
 
   // Load more
   const loadmore = () => {
-    setIsloading(true);
-
     setperpage(itemsPerPage + 8);
     if (itemsPerPage + 8 > currentCountries.length) {
       setcurrentCountries(currentCountries.slice(0, currentCountries.length));
-      setIsloading(false);
 
       return;
     }
