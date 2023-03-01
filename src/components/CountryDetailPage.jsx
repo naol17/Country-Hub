@@ -54,48 +54,81 @@ export default function Country() {
                 {/* Detail abiut the country */}
                 <div className="flex mt-6 md:pr-12 sm:flex-col  md:w-96 sm:w-1/2  ">
                   <div className=" w-1/2 ml-4 sm:w-1/2">
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white flex ">
-                      Native Name:
-                      {Object.keys(country.name.nativeName).map(
-                        (nativeNameKey) => (
-                          <ul className="pl-2 flex-row " key={nativeNameKey}>
-                            {country.name.nativeName[nativeNameKey].official},
-                          </ul>
-                        )
-                      )}
-                      <span className="ml-2"></span>
-                    </h2>
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                      Population:{country.population}
-                    </h2>
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                      Region:{country.region}
-                    </h2>
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                      Sub Region: {country.subregion}
-                    </h2>
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                      Capital: {country.capital}
-                    </h2>
+                    <div className="flex">
+                      <h2 className="mb-2 dark:text- font-semibold dark:text-white flex ">
+                        Native Name:
+                      </h2>
+                      <span className="ml-2 flex-row">
+                        {Object.keys(country.name.nativeName).map(
+                          (nativeNameKey) => (
+                            <ul
+                              className="pl-2 flex-row dark:text-white"
+                              key={nativeNameKey}
+                            >
+                              {country.name.nativeName[nativeNameKey].official},
+                            </ul>
+                          )
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex">
+                      <h2 className=" mb-2 dark:text- font-semibold dark:text-white ">
+                        Population:{" "}
+                      </h2>
+                      <p className="pl-2 dark:text-white">
+                        {country.population}
+                      </p>
+                    </div>
+                    <div className="flex">
+                      <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
+                        Region:
+                      </h2>
+                      <p className="dark:text-white pl-2">{country.region}</p>
+                    </div>
+                    <div className="flex">
+                      <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
+                        Sub Region:
+                      </h2>
+                      <p className="dark:text-white"> {country.subregion}</p>
+                    </div>
+                    <div className="flex">
+                      <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
+                        Capital:
+                      </h2>
+                      <p className="dark:text-white pl-2"> {country.capital}</p>
+                    </div>
                   </div>
                   <div className="w-1/2 ml-4 sm:w-full  md:w-full md:p-3 pl-12 p-5 md:pl-14 sm:-ml-7 sm:-mt-5">
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                      Top Level Domain: {country.tld}
-                    </h2>
+                    <div className="flex">
+                      <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
+                        Top Level Domain:
+                      </h2>
+                      <p className="dark:text-white pl-2">{country.tld}</p>
+                    </div>
                     {country.currencies[Object.keys(country.currencies)] &&
                     country ? (
                       <>
-                        <h2 className="mb-2 dark:text- font-semibold dark:text-white  ">
-                          Curency:{" "}
-                          {
-                            country.currencies[Object.keys(country.currencies)]
-                              .name
-                          }
-                        </h2>
-                        <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                          Language:{" "}
-                          {country.languages[Object.keys(country.languages)]}
-                        </h2>
+                        <div className="flex">
+                          <h2 className="mb-2 dark:text- font-semibold dark:text-white  ">
+                            Curency:{" "}
+                          </h2>
+                          <p className="dark:text-white pl-1">
+                            {
+                              country.currencies[
+                                Object.keys(country.currencies)
+                              ].name
+                            }
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
+                            Language:{" "}
+                          </h2>
+                          <p className="dark:text-white pl-1">
+                            {" "}
+                            {country.languages[Object.keys(country.languages)]}
+                          </p>
+                        </div>
                       </>
                     ) : (
                       <h1></h1>
