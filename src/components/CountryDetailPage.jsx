@@ -42,8 +42,8 @@ export default function Country() {
         return (
           <>
             <div className="flex align-midle justify-between mr-20 ml-16 mt-12 md:h-1/2 sm:flex-col sm:-mt-12">
-              <div className=" mt-12  lg:pb-32 lg:pr-32 lg:pl-32 md:-mt-50 sm:mt-24 h-24">
-                <img className="h-80" src={country.flags.svg} alt="" />
+              <div className=" mt-12   md:-mt-50 sm:mt-24 h-96">
+                <img className="h-80 md:w-96" src={country.flags.svg} alt="" />
               </div>
               <div className="  w-2/3 p-8 md:w-1/2 md:mr-7 sm:mt-6 sm:p-0 sm:-ml-3">
                 {/* Countrie Name */}
@@ -82,14 +82,24 @@ export default function Country() {
                     <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
                       Top Level Domain: {country.tld}
                     </h2>
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white  ">
-                      Curency:{" "}
-                      {country.currencies[Object.keys(country.currencies)].name}
-                    </h2>
-                    <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
-                      Language:{" "}
-                      {country.languages[Object.keys(country.languages)]}
-                    </h2>
+                    {country.currencies[Object.keys(country.currencies)] &&
+                    country ? (
+                      <>
+                        <h2 className="mb-2 dark:text- font-semibold dark:text-white  ">
+                          Curency:{" "}
+                          {
+                            country.currencies[Object.keys(country.currencies)]
+                              .name
+                          }
+                        </h2>
+                        <h2 className="mb-2 dark:text- font-semibold dark:text-white ">
+                          Language:{" "}
+                          {country.languages[Object.keys(country.languages)]}
+                        </h2>
+                      </>
+                    ) : (
+                      <h1></h1>
+                    )}
                   </div>
                 </div>
 
@@ -100,17 +110,25 @@ export default function Country() {
                   </h2>
                   <div>
                     <div className="flex" key={index}>
-                      <ul className="border rounded p-1 dark:text-white ml-2">
-                        {country.borders[0]}
-                      </ul>
-                      <ul className="border rounded p-1 dark:text-white ml-2">
-                        {" "}
-                        {country.borders[1]}
-                      </ul>
-                      <ul className="border rounded p-1 dark:text-white ml-2">
-                        {" "}
-                        {country.borders[2]}
-                      </ul>
+                      {country.borders && country ? (
+                        <div className="flex" key={index}>
+                          <ul className="border rounded p-1 dark:text-white ml-2">
+                            {country.borders[0]}
+                          </ul>
+                          <ul className="border rounded p-1 dark:text-white ml-2">
+                            {" "}
+                            {country.borders[1]}
+                          </ul>
+                          <ul className="border rounded p-1 dark:text-white ml-2">
+                            {" "}
+                            {country.borders[2]}
+                          </ul>
+                        </div>
+                      ) : (
+                        <h1 className="dark:text-white ">
+                          Have no border Countries
+                        </h1>
+                      )}
                     </div>
                   </div>
                 </div>
