@@ -17,13 +17,17 @@ const Countries = () => {
 
   // Load more
   const loadmore = () => {
-    setperpage(itemsPerPage + 8);
     setIsloading(true);
+
+    setperpage(itemsPerPage + 8);
     if (itemsPerPage + 8 > currentCountries.length) {
       setcurrentCountries(currentCountries.slice(0, currentCountries.length));
+      setIsloading(false);
+
       return;
     }
     setcurrentCountries(currentCountries.slice(0, itemsPerPage + 8));
+    setIsloading(false);
   };
 
   //  all countries
@@ -133,11 +137,11 @@ const Countries = () => {
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9">
+      <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9 ">
         {isLoading && (
-          <h1 className="flex m-24 md:m-16 sm:m-10 sm:text-sm md:text-md dark:m-24 dark:text-white dark:text-md text-6xl">
+          <h1 className="flex m-24 md:m-16 sm:m-8 sm:text-sm md:text-md dark:m-24 dark:text-white dark:text-md text-6xl md:ml-32">
             {" "}
-            <span className="m-3">
+            <span className="m-3 sm:m-4 sm:pt-0 ">
               <AiOutlineLoading3Quarters />
             </span>{" "}
             Loading ...
@@ -152,7 +156,7 @@ const Countries = () => {
             );
           })
         ) : (
-          <h1 className="m-24 dark:m-24 dark:text-white dark:text-md text-6xl  md:m-16 sm:m-10 sm:text-sm md:text-md">
+          <h1 className="m-24 sm:pt-10 dark:m-24 dark:text-white dark:text-md text-6xl dark:sm:-mt-24 sm:-mt-16  md:m-16 sm:m-10 sm:text-sm md:text-md">
             No country found
           </h1>
         )}
