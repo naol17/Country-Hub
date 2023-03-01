@@ -2,19 +2,19 @@ import React from "react";
 function Country({ country }) {
   return (
     <>
-      <section class=" ml-12 mr-4 bg-[#F3F4F6] border shadow dark:border-slate-700 dark:bg-slate-700 mt-10">
-        <div class="flex flex-wrap ">
-          <div class=" rounded-lg overflow-hidden mb-10">
+      <section className=" ml-12 mr-4 bg-[#F3F4F6] border shadow dark:border-slate-700 dark:bg-slate-700 mt-10">
+        <div className="flex flex-wrap ">
+          <div className=" rounded-lg overflow-hidden mb-10">
             <img
               key={country.name.common}
               src={country.flags.svg}
               alt=""
-              class="w-full aspect-[5/3]"
+              className="w-full aspect-[5/3]"
             />
-            <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
+            <div className="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
               <h3>
                 <h1
-                  class="
+                  className="
                         font-semibold
                         text-dark text-xl
                         sm:text-[22px]
