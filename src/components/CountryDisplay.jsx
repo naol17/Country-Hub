@@ -46,10 +46,17 @@ const Countries = () => {
     return axios.get(`https://restcountries.com/v3.1/name/${countryName}`).then(
       (res) => {
         setcurrentCountries(res.data.slice(itemOffset, endOffset));
+        console.log("status", res.status);
         setIsloading(false);
       },
       (error) => {
-        return <h1>{error.message}</h1>;
+        const statusCode = error.response.data.status;
+        if (statusCode === 404) {
+          setcurrentCountries([]);
+        } else {
+          return <h1>{error.message}</h1>;
+        }
+        setIsloading(false);
       }
     );
   };
@@ -136,31 +143,34 @@ const Countries = () => {
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center items w-full dark:bg-slate-800 bg-gray-50 pr-9 ">
         {isLoading && (
-          <h1 className="flex m-24 md:m-16 sm:m-8 sm:text-sm md:text-md dark:m-24 dark:text-white dark:text-md text-6xl md:ml-32">
-            {" "}
-            <span className="m-3 sm:m-4 sm:pt-0 ">
-              <AiOutlineLoading3Quarters />
-            </span>{" "}
-            Loading ...
-          </h1>
+          <div className="col-span-full">
+            <h1 className="flex items-center m-24 md:m-16 sm:m-8 sm:text-sm md:text-md dark:m-24 dark:text-white dark:text-md text-4xl md:ml-32">
+              <span className="m-3 sm:m-4 sm:pt-0 ">
+                <AiOutlineLoading3Quarters />
+              </span>
+              Loading countries...
+            </h1>
+          </div>
         )}
-        {!isLoading && currentCountries && currentCountries.length > 0 ? (
+        {!isLoading &&
+          currentCountries &&
+          currentCountries.length > 0 &&
           currentCountries.map((country) => {
             return (
               <Link to={`Countrydetails/${country.name.common}`}>
                 <FechCountry country={country} key={country.cca2} />
               </Link>
             );
-          })
-        ) : (
-          <h1 className="m-24 sm:pt-10 dark:m-24 dark:text-white dark:text-md text-6xl dark:sm:-mt-24 sm:-mt-16  md:m-16 sm:m-10 sm:text-sm md:text-md">
+          })}
+        {!isLoading && currentCountries && currentCountries.length === 0 && (
+          <h1 className="col-span-full m-24 sm:pt-10 dark:m-24 dark:text-white dark:text-md text-4xl dark:sm:-mt-24 sm:-mt-16  md:m-16 sm:m-10 sm:text-sm md:text-md">
             No country found
           </h1>
         )}
       </div>
       <div className="dark:bg-slate-800 flex items-center justify-center pt-10">
         <button
-          className="border border-black mt-4 dark:mt-4 bg-slate-700 text-white hover:bg-green-500 rounded dark:bg-lime-400 dark:hover:bg-lime-500   dark:text-black p-2 mb-12  w-32 h-16"
+          className="border border-black mt-4 dark:mt-4 bg-slate-700 text-white hover:bg-green-500 rounded dark:bg-lime-400 dark:hover:bg-lime-500   dark:text-black p-2 mb-12 w-32 h-16"
           onClick={loadmore}
         >
           {isLoading && <p>Loading...</p>}
