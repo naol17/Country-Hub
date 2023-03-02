@@ -87,6 +87,7 @@ const Countries = () => {
   }, [searchInput]);
 
   useEffect(() => {
+    console.log("i", regionSearchInput);
     if (!regionSearchInput) {
       getCountries();
     } else {
@@ -103,7 +104,6 @@ const Countries = () => {
   const regionSearchCountry = (e) => {
     const value = e.target.value;
     setSearchinput(null);
-
     setRegionSearchinput(value);
   };
   // //////////////////////
@@ -132,7 +132,7 @@ const Countries = () => {
             value={regionSearchInput}
             onChange={regionSearchCountry}
           >
-            <option value="null">Filter By Region</option>
+            <option value="">Filter By Region</option>
             <option value="Africa">Africa</option>
             <option value="Asia">Asia</option>
             <option value="Americas">Americas</option>
