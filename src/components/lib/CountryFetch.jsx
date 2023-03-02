@@ -8,8 +8,8 @@ function Country({ country }) {
             <img
               key={country.name.common}
               src={country.flags.svg}
-              alt=""
-              className="w-full aspect-[5/3]"
+              alt={country.name.common}
+              className="w-full object-cover h-44"
             />
             <div className="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
               <h3>
