@@ -158,7 +158,7 @@ const Countries = () => {
           </h1>
         )}
       </div>
-      <div className="dark:bg-slate-800 pl-96 sm:pl-20 md:pl-60 pr-60 ">
+      <div className="dark:bg-slate-800 flex items-center justify-center pt-10">
         <button
           className="border border-black mt-4 dark:mt-4 bg-slate-700 text-white hover:bg-green-500 rounded dark:bg-lime-400 dark:hover:bg-lime-500   dark:text-black p-2 mb-12  w-32 h-16"
           onClick={loadmore}
